@@ -8,9 +8,13 @@
 
 import UIKit
 
+protocol CellProvider {
+    var cells: [GameCell] { get }
+}
+
 class GameCollectionViewDataSource: NSObject {
     
-    var controller: GameController?
+    var provider: CellProvider?
     let formatter = NSNumberFormatter()
     let bombSymbol = NSLocalizedString("bomb_symbol", value: "💣", comment: "The bomb character displayed when the game has been lost.")
     let flagSymbol = NSLocalizedString("marked_symbol", value: "🚩", comment: "The flag character displayed when a square has been marked as a bomb")
@@ -27,12 +31,12 @@ class GameCollectionViewDataSource: NSObject {
 extension GameCollectionViewDataSource: UICollectionViewDataSource {
 
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return controller?.cells.count ?? 0
+        return provider?.cells.count ?? 0
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(String(GameCollectionViewCell), forIndexPath: indexPath) as! GameCollectionViewCell
-        guard let controller = controller else { return cell }
+        guard let controller = provider else { return cell }
         let cellModel = controller.cells[indexPath.item]
         
         cell.numberLabel.text = cellModel.isBomb ? bombSymbol

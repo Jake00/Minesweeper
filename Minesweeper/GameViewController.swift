@@ -28,8 +28,8 @@ class GameViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        dataSource.controller = controller
-        controller.delegate   = self
+        dataSource.provider = controller
+        controller.delegate = self
     }
     
     // MARK: - Interface actions

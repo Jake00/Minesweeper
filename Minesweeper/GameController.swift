@@ -138,3 +138,5 @@ final class GameController {
         return indexes
     }
 }
+
+extension GameController: CellProvider { }
