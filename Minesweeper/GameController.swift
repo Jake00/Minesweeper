@@ -22,13 +22,17 @@ final class GameController {
     
     weak var delegate: GameControllerDelegate?
     
+    init() {
+        reset()
+    }
+    
+    // MARK: Board
+    
     var remainingCoveredCells: Int {
         return cells.reduce(0) { (remaining: Int, cell: GameCell) in
             cell.state == .Covered ? remaining + 1 : remaining
         }
     }
-    
-    // MARK: Board
     
     struct Board {
         let rows:    Int
