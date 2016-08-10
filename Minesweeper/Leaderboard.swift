@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct LeaderboardEntry {
+struct LeaderboardEntry: Comparable {
     
     let name:     String
     let duration: NSTimeInterval
@@ -30,6 +30,16 @@ struct LeaderboardEntry {
     var asDictionary: [String: AnyObject] {
         return ["name": name, "duration": duration, "board": board.asDictionary]
     }
+}
+
+func == (lhs: LeaderboardEntry, rhs: LeaderboardEntry) -> Bool {
+    return lhs.name     == rhs.name
+        && lhs.duration == rhs.duration
+        && lhs.board    == rhs.board
+}
+
+func < (lhs: LeaderboardEntry, rhs: LeaderboardEntry) -> Bool {
+    return lhs.duration < rhs.duration
 }
 
 final class Leaderboard {

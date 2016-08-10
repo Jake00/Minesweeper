@@ -20,7 +20,7 @@ class LeaderboardViewController: UITableViewController {
     }()
     
     func entries(difficulty board: GameController.Board) -> [LeaderboardEntry] {
-        return leaderboard.entries.filter { $0.board == board }
+        return leaderboard.entries.filter { $0.board == board }.sort()
     }
     
     var otherBoardSizeEntries: [LeaderboardEntry] {
