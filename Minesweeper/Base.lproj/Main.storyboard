@@ -6,7 +6,7 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--Game View Controller-->
+        <!--Minesweeper-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="GameViewController" customModule="Minesweeper" customModuleProvider="target" sceneMemberID="viewController">
@@ -111,11 +111,34 @@
                         </barButtonItem>
                         <barButtonItem width="20" style="plain" systemItem="fixedSpace" id="QgN-Dy-Ka7"/>
                     </toolbarItems>
-                    <navigationItem key="navigationItem" id="tEw-eJ-gYu"/>
+                    <navigationItem key="navigationItem" title="Minesweeper" id="tEw-eJ-gYu">
+                        <barButtonItem key="rightBarButtonItem" width="40" style="plain" id="8vM-EY-PNL">
+                            <view key="customView" opaque="NO" contentMode="scaleToFill" id="rhP-As-9xI">
+                                <rect key="frame" x="540" y="5" width="40" height="33"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XJm-XI-aIm">
+                                        <rect key="frame" x="0.0" y="0.0" width="40" height="33"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="0.68627450980000004" green="0.68627450980000004" blue="0.68627450980000004" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="XJm-XI-aIm" secondAttribute="bottom" id="egv-6Q-M5K"/>
+                                    <constraint firstAttribute="trailing" secondItem="XJm-XI-aIm" secondAttribute="trailing" id="f8G-M0-3oc"/>
+                                    <constraint firstItem="XJm-XI-aIm" firstAttribute="top" secondItem="rhP-As-9xI" secondAttribute="top" id="jw8-DN-eEY"/>
+                                    <constraint firstItem="XJm-XI-aIm" firstAttribute="leading" secondItem="rhP-As-9xI" secondAttribute="leading" id="xpx-Wt-z8L"/>
+                                </constraints>
+                            </view>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="collectionView" destination="mAn-Pa-FX0" id="Vku-aX-OFt"/>
                         <outlet property="collectionViewLayout" destination="izp-qB-QiC" id="AuR-im-iln"/>
                         <outlet property="dataSource" destination="m7t-0Y-MoQ" id="xlx-2j-HXl"/>
+                        <outlet property="timeLabel" destination="XJm-XI-aIm" id="bD7-dJ-gOc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

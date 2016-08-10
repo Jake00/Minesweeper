@@ -8,6 +8,8 @@
 
 import Foundation
 
+// MARK: Game controller delegate
+
 protocol GameControllerDelegate: class {
     
     func gameDidWin(controller: GameController)
@@ -15,7 +17,9 @@ protocol GameControllerDelegate: class {
     func gameDidLose(controller: GameController, byRevealingBombAtIndex index: Int)
 }
 
-final class GameController {
+// MARK: -
+
+final class GameController: CellProvider {
     
     private(set) var cells: [GameCell] = []
     private(set) var board: Board = .easy
@@ -33,28 +37,19 @@ final class GameController {
     
     // MARK: Board
     
-    var remainingCoveredCells: Int {
-        return cells.reduce(0) { (remaining: Int, cell: GameCell) in
-            cell.isCovered ? remaining + 1 : remaining
-        }
-    }
-    
     struct Board {
         let rows:    Int
         let columns: Int
         let bombs:   Int
-        
-        init(rows: Int, columns: Int, bombs: Int) {
-            self.rows = rows; self.columns = columns; self.bombs = bombs
-        }
-        
-        var squares: Int {
-            return rows * columns
-        }
+        var squares: Int { return rows * columns }
         
         static let easy   = Board(rows: 8,  columns: 8,  bombs: 5)
         static let medium = Board(rows: 8,  columns: 8,  bombs: 10)
         static let hard   = Board(rows: 12, columns: 12, bombs: 40)
+    }
+    
+    var remainingCoveredCells: Int {
+        return cells.reduce(0) { $1.isCovered ? $0 + 1 : $0 }
     }
     
     // MARK: Index conversion
@@ -84,6 +79,7 @@ final class GameController {
         var cell = cells[index]
         
         guard cell.isCovered else {
+            /* Lose condition */
             if cell.isBomb {
                 state = .Lost
                 delegate?.gameDidLose(self, byRevealingBombAtIndex: index)
@@ -94,6 +90,7 @@ final class GameController {
         cell.state = .Revealed
         cells[index] = cell
         
+        /* Win condition */
         if remainingCoveredCells == 0 {
             state = .Won
             delegate?.gameDidWin(self)
@@ -112,11 +109,11 @@ final class GameController {
     // MARK: Private
     
     private func insertBombs() {
+        func nextFreeIndex() -> Int {
+            let index = Int(arc4random_uniform(UInt32(board.squares - 1)))
+            return !cells[index].isBomb ? index : nextFreeIndex()
+        }
         for _ in 0..<board.bombs {
-            func nextFreeIndex() -> Int {
-                let index = Int(arc4random_uniform(UInt32(board.squares - 1)))
-                return !cells[index].isBomb ? index : nextFreeIndex()
-            }
             let index = nextFreeIndex()
             cells[index].state = .Bomb
             
@@ -126,7 +123,7 @@ final class GameController {
         }
     }
     
-    private func adjacentCellIndices(forIndex index: Int, includeCorners: Bool = true) -> [Int] {
+    private func adjacentCellIndices(forIndex index: Int) -> [Int] {
         let (row, column) = coordinate(forIndex: index)
         let isTopEdge    = row    == 0
         let isBottomEdge = row    == board.rows - 1
@@ -138,19 +135,17 @@ final class GameController {
         let right        = index  +  1
         
         var indices: [Int] = []
-        indices.reserveCapacity(includeCorners ? 8 : 4)
+        indices.reserveCapacity(8)
         
-        if !isTopEdge    && !isLeftEdge  && includeCorners { indices.append(up - 1)   }
-        if !isTopEdge                                      { indices.append(up)       }
-        if !isTopEdge    && !isRightEdge && includeCorners { indices.append(up + 1)   }
-        if !isLeftEdge                                     { indices.append(left)     }
-        if !isRightEdge                                    { indices.append(right)    }
-        if !isBottomEdge && !isLeftEdge  && includeCorners { indices.append(down - 1) }
-        if !isBottomEdge                                   { indices.append(down)     }
-        if !isBottomEdge && !isRightEdge && includeCorners { indices.append(down + 1) }
+        if !isTopEdge    && !isLeftEdge  { indices.append(up - 1)   }
+        if !isTopEdge                    { indices.append(up)       }
+        if !isTopEdge    && !isRightEdge { indices.append(up + 1)   }
+        if !isLeftEdge                   { indices.append(left)     }
+        if !isRightEdge                  { indices.append(right)    }
+        if !isBottomEdge && !isLeftEdge  { indices.append(down - 1) }
+        if !isBottomEdge                 { indices.append(down)     }
+        if !isBottomEdge && !isRightEdge { indices.append(down + 1) }
         
         return indices
     }
 }
-
-extension GameController: CellProvider { }

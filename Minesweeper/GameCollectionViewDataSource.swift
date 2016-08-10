@@ -17,7 +17,7 @@ class GameCollectionViewDataSource: NSObject {
     var provider: CellProvider?
     let formatter = NSNumberFormatter()
     let bombSymbol = NSLocalizedString("bomb_symbol", value: "💣", comment: "The bomb character displayed when the game has been lost.")
-    let flagSymbol = NSLocalizedString("marked_symbol", value: "🚩", comment: "The flag character displayed when a square has been marked as a bomb")
+    let flagSymbol = NSLocalizedString("marked_symbol", value: "🚩", comment: "The flag character displayed when a square has been marked as a bomb.")
     
     var losingIndex: Int? = nil
     var revealBombs: Bool = false
