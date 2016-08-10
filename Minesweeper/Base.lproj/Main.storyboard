@@ -112,7 +112,7 @@
                         <barButtonItem width="20" style="plain" systemItem="fixedSpace" id="QgN-Dy-Ka7"/>
                     </toolbarItems>
                     <navigationItem key="navigationItem" title="Minesweeper" id="tEw-eJ-gYu">
-                        <barButtonItem key="rightBarButtonItem" width="40" style="plain" id="8vM-EY-PNL">
+                        <barButtonItem key="rightBarButtonItem" width="40" id="8vM-EY-PNL">
                             <view key="customView" opaque="NO" contentMode="scaleToFill" id="rhP-As-9xI">
                                 <rect key="frame" x="540" y="5" width="40" height="33"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
