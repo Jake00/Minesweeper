@@ -44,6 +44,7 @@ class GameViewController: UIViewController {
         dataSource.reset()
         startTime = nil
         collectionView.reloadData()
+        updateBombsRemaining()
     }
     
     // MARK: - Time counter
@@ -65,6 +66,14 @@ class GameViewController: UIViewController {
         timeLabel.text = timeFormatter.stringFromTimeInterval(duration)
     }
     
+    // MARK: - Bombs remaining
+    
+    @IBOutlet weak var bombsRemainingLabel: UILabel!
+    
+    func updateBombsRemaining() {
+        bombsRemainingLabel.text = dataSource.formatter.stringFromNumber(game.remainingMarkers)
+    }
+    
     // MARK: - View controller
     
     override func viewDidLoad() {
@@ -72,6 +81,7 @@ class GameViewController: UIViewController {
         dataSource.provider = game
         game.delegate = self
         updateTime()
+        updateBombsRemaining()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -118,6 +128,7 @@ extension GameViewController: GameCollectionViewCellTouchEvents {
         if let indexPath = collectionView.indexPathForCell(cell) {
             game.mark(at: indexPath.item)
             collectionView.reloadItemsAtIndexPaths([indexPath])
+            updateBombsRemaining()
         }
     }
 }

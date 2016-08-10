@@ -68,6 +68,10 @@ final class GameController: CellProvider {
         return cells.reduce(0) { $1.isCovered ? $0 + 1 : $0 }
     }
     
+    var remainingMarkers: Int {
+        return cells.reduce(board.bombs) { $1.isMarked ? $0 - 1 : $0 }
+    }
+    
     // MARK: Index conversion
     
     func index(for row: Int, column: Int) -> Int {
