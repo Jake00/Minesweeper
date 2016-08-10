@@ -93,12 +93,17 @@ extension GameViewController: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        controller.reveal(atIndex: indexPath.row)
+        let indices = controller.reveal(atIndex: indexPath.row)
+        indices
             .map     { NSIndexPath(forItem: $0, inSection: 0) }
             .flatMap { collectionView.cellForItemAtIndexPath($0) as? GameCollectionViewCell }
             .forEach { cell in
                 cell.isRevealed = true
         }
+    }
+    
+    func collectionView(collectionView: UICollectionView, shouldHighlightItemAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return controller.state == .Playing && controller.cells[indexPath.row].canReveal
     }
 }
 
@@ -113,5 +118,6 @@ extension GameViewController: GameControllerDelegate {
     func gameDidLose(controller: GameController, byRevealingBombAtIndex index: Int) {
         dataSource.losingIndex = index
         dataSource.revealBombs = true
+        collectionView.reloadData()
     }
 }

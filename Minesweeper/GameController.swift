@@ -19,8 +19,13 @@ final class GameController {
     
     private(set) var cells: [GameCell] = []
     private(set) var board: Board = .easy
+    private(set) var state: State = .Playing
     
     weak var delegate: GameControllerDelegate?
+    
+    enum State {
+        case Won, Lost, Playing
+    }
     
     init() {
         reset()
@@ -30,7 +35,7 @@ final class GameController {
     
     var remainingCoveredCells: Int {
         return cells.reduce(0) { (remaining: Int, cell: GameCell) in
-            cell.state == .Covered ? remaining + 1 : remaining
+            cell.isCovered ? remaining + 1 : remaining
         }
     }
     
@@ -70,6 +75,7 @@ final class GameController {
     }
     
     func reset() {
+        state = .Playing
         cells = Array(count: board.squares, repeatedValue: GameCell())
         insertBombs()
     }
@@ -77,8 +83,9 @@ final class GameController {
     func reveal(atIndex index: Int) -> [Int] {
         var cell = cells[index]
         
-        guard cell.canReveal else {
+        guard cell.isCovered else {
             if cell.isBomb {
+                state = .Lost
                 delegate?.gameDidLose(self, byRevealingBombAtIndex: index)
             }
             return [index]
@@ -88,15 +95,18 @@ final class GameController {
         cells[index] = cell
         
         if remainingCoveredCells == 0 {
+            state = .Won
             delegate?.gameDidWin(self)
             return [index]
         }
         
         /* Auto reveal cells when they have no adjacent bombs */
         guard cell.adjacentBombs == 0 else { return [index] }
-        return Set(adjacentCellIndexes(forIndex: index).flatMap {
+        var indices = adjacentCellIndices(forIndex: index).flatMap {
             self.reveal(atIndex: $0)
-            }).sort()
+        }
+        indices.append(index)
+        return Set(indices).sort()
     }
     
     // MARK: Private
@@ -105,18 +115,18 @@ final class GameController {
         for _ in 0..<board.bombs {
             func nextFreeIndex() -> Int {
                 let index = Int(arc4random_uniform(UInt32(board.squares - 1)))
-                return cells[index].state != .Bomb ? index : nextFreeIndex()
+                return !cells[index].isBomb ? index : nextFreeIndex()
             }
             let index = nextFreeIndex()
             cells[index].state = .Bomb
             
-            for adjacentIndex in adjacentCellIndexes(forIndex: index) {
+            for adjacentIndex in adjacentCellIndices(forIndex: index) {
                 cells[adjacentIndex].adjacentBombs += 1
             }
         }
     }
     
-    private func adjacentCellIndexes(forIndex index: Int, includeCorners: Bool = true) -> [Int] {
+    private func adjacentCellIndices(forIndex index: Int, includeCorners: Bool = true) -> [Int] {
         let (row, column) = coordinate(forIndex: index)
         let isTopEdge    = row    == 0
         let isBottomEdge = row    == board.rows - 1
@@ -127,19 +137,19 @@ final class GameController {
         let left         = index  -  1
         let right        = index  +  1
         
-        var indexes: [Int] = []
-        indexes.reserveCapacity(includeCorners ? 8 : 4)
+        var indices: [Int] = []
+        indices.reserveCapacity(includeCorners ? 8 : 4)
         
-        if !isTopEdge    && !isLeftEdge  && includeCorners { indexes.append(up - 1)   }
-        if !isTopEdge                                      { indexes.append(up)       }
-        if !isTopEdge    && !isRightEdge && includeCorners { indexes.append(up + 1)   }
-        if !isLeftEdge                                     { indexes.append(left)     }
-        if !isRightEdge                                    { indexes.append(right)    }
-        if !isBottomEdge && !isLeftEdge  && includeCorners { indexes.append(down - 1) }
-        if !isBottomEdge                                   { indexes.append(down)     }
-        if !isBottomEdge && !isRightEdge && includeCorners { indexes.append(down + 1) }
+        if !isTopEdge    && !isLeftEdge  && includeCorners { indices.append(up - 1)   }
+        if !isTopEdge                                      { indices.append(up)       }
+        if !isTopEdge    && !isRightEdge && includeCorners { indices.append(up + 1)   }
+        if !isLeftEdge                                     { indices.append(left)     }
+        if !isRightEdge                                    { indices.append(right)    }
+        if !isBottomEdge && !isLeftEdge  && includeCorners { indices.append(down - 1) }
+        if !isBottomEdge                                   { indices.append(down)     }
+        if !isBottomEdge && !isRightEdge && includeCorners { indices.append(down + 1) }
         
-        return indexes
+        return indices
     }
 }
 

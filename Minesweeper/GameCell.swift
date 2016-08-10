@@ -21,6 +21,10 @@ struct GameCell {
     var adjacentBombs: Int = 0
     
     var canReveal: Bool {
+        return state != .Revealed
+    }
+    
+    var isCovered: Bool {
         return state == .Covered
     }
     

@@ -24,7 +24,7 @@ class GameCollectionViewDataSource: NSObject {
     
     func reset() {
         losingIndex = nil
-        revealBombs = false
+        revealBombs = true
     }
 }
 

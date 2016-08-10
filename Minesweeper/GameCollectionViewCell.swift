@@ -26,9 +26,7 @@ class GameCollectionViewCell: UICollectionViewCell {
         get { return super.highlighted }
         set {
             super.highlighted = newValue
-            if !isRevealed {
-                bevels.forEach { $0.hidden = newValue }
-            }
+            bevels.forEach { $0.hidden = newValue }
         }
     }
     
