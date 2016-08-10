@@ -14,14 +14,31 @@ class GameViewController: UIViewController {
     @IBOutlet weak var collectionViewLayout: UICollectionViewFlowLayout!
     @IBOutlet var dataSource: GameCollectionViewDataSource!
     
-    let controller = GameController()
-    
     struct Text {
         static let changeDifficultyTitle  = NSLocalizedString("change_difficulty_action_sheet.title",         value: "Change difficulty", comment: "Title of an action sheet displayed for changing the difficulty setting of the game.")
         static let changeDifficultyHard   = NSLocalizedString("change_difficulty_action_sheet.action.hard",   value: "Hard",   comment: "Set game to 'Hard' difficulty setting.")
         static let changeDifficultyMedium = NSLocalizedString("change_difficulty_action_sheet.action.medium", value: "Medium", comment: "Set game to 'Medium / moderate' difficulty setting.")
         static let changeDifficultyEasy   = NSLocalizedString("change_difficulty_action_sheet.action.easy",   value: "Easy",   comment: "Set game to 'Easy' difficulty setting.")
         static let changeDifficultyCancel = NSLocalizedString("change_difficulty_action_sheet.action.Cancel", value: "Cancel", comment: "Cancel action which will not set a new difficulty setting.")
+    }
+    
+    // MARK: - Game controller
+    
+    let controller = GameController()
+    
+    var difficulty: GameController.Board {
+        get { return controller.board }
+        set { reset(usingNewBoard: newValue) }
+    }
+    
+    func reset(usingNewBoard board: GameController.Board?) {
+        if let board = board {
+            controller.resetBoard(difficulty: board)
+        } else {
+            controller.reset()
+        }
+        dataSource.reset()
+        collectionView.reloadData()
     }
     
     // MARK: - View controller
@@ -51,23 +68,6 @@ class GameViewController: UIViewController {
         alertController.addAction(UIAlertAction(title: Text.changeDifficultyCancel, style: .Cancel, handler: nil))
         presentViewController(alertController, animated: true, completion: nil)
     }
-    
-    // MARK: -
-    
-    func reset(usingNewBoard board: GameController.Board?) {
-        if let board = board {
-            controller.resetBoard(difficulty: board)
-        } else {
-            controller.reset()
-        }
-        dataSource.reset()
-        collectionView.reloadData()
-    }
-    
-    var difficulty: GameController.Board {
-        get { return controller.board }
-        set { reset(usingNewBoard: newValue) }
-    }
 }
 
 // MARK: - Collection view delegate flow layout
@@ -94,7 +94,11 @@ extension GameViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         controller.reveal(atIndex: indexPath.row)
-        collectionView.reloadData()
+            .map     { NSIndexPath(forItem: $0, inSection: 0) }
+            .flatMap { collectionView.cellForItemAtIndexPath($0) as? GameCollectionViewCell }
+            .forEach { cell in
+                cell.isRevealed = true
+        }
     }
 }
 

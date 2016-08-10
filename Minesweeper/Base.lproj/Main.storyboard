@@ -29,7 +29,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="GameCollectionViewCell" id="YKv-bv-rMg" customClass="GameCollectionViewCell" customModule="Minesweeper" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        <rect key="frame" x="0.0" y="64" width="50" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
@@ -126,7 +126,7 @@
         <!--Navigation Controller-->
         <scene sceneID="DcK-B0-W53">
             <objects>
-                <navigationController navigationBarHidden="YES" toolbarHidden="NO" id="6gS-xg-Pp2" sceneMemberID="viewController">
+                <navigationController toolbarHidden="NO" id="6gS-xg-Pp2" sceneMemberID="viewController">
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Lgp-G6-i63">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>

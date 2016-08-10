@@ -22,18 +22,26 @@ class GameCollectionViewCell: UICollectionViewCell {
         }
     }
     
+    override var highlighted: Bool {
+        get { return super.highlighted }
+        set {
+            super.highlighted = newValue
+            if !isRevealed {
+                bevels.forEach { $0.hidden = newValue }
+            }
+        }
+    }
+    
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        let aspectRatio = bounds.height / bounds.width
-        let bevelWidth  = aspectRatio * 2
-        let bevelHeight = aspectRatio * 2
+        let bevel = bounds.height / bounds.width * 2
         topBevel.translatesAutoresizingMaskIntoConstraints = true
         topBevel.frame = CGRect(
-            x: bevelWidth,
-            y: bevelHeight,
-            width:  contentView.bounds.width  - bevelWidth  * 2,
-            height: contentView.bounds.height - bevelHeight * 2.3)
+            x: bevel,
+            y: bevel,
+            width:  contentView.bounds.width  - bevel * 2.3,
+            height: contentView.bounds.height - bevel * 2.3)
         
         let mask = upperBevel.layer.mask as? CAShapeLayer ?? {
             let m = CAShapeLayer(); upperBevel.layer.mask = m; return m
