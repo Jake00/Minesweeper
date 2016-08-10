@@ -39,6 +39,7 @@ extension GameCollectionViewDataSource: UICollectionViewDataSource {
         guard let controller = provider else { return cell }
         let cellModel = controller.cells[indexPath.item]
         
+        cell.numberLabel.textColor = cellModel.adjacentBombs.color
         cell.numberLabel.text = cellModel.isBomb ? bombSymbol
             : cellModel.isMarked ? flagSymbol
             : cellModel.adjacentBombs == 0 ? nil
@@ -51,5 +52,22 @@ extension GameCollectionViewDataSource: UICollectionViewDataSource {
         cell.backgroundColor    = indexPath.row == losingIndex ? .redColor() : .midGrayColor()
         
         return cell
+    }
+}
+
+private extension Int {
+    
+    var color: UIColor {
+        switch self {
+        case 1:  return .blueColor()
+        case 2:  return .greenColor()
+        case 3:  return .redColor()
+        case 4:  return .purpleColor()
+        case 5:  return .orangeColor()
+        case 6:  return .brownColor()
+        case 7:  return .blackColor()
+        case 8:  return .grayColor()
+        default: return .blackColor()
+        }
     }
 }

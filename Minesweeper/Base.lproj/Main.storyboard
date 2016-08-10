@@ -110,13 +110,13 @@
                                 </constraints>
                             </view>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" width="40" id="8vM-EY-PNL">
+                        <barButtonItem key="rightBarButtonItem" width="70" id="8vM-EY-PNL">
                             <view key="customView" opaque="NO" contentMode="scaleToFill" id="rhP-As-9xI">
-                                <rect key="frame" x="540" y="5" width="40" height="33"/>
+                                <rect key="frame" x="510" y="5" width="70" height="33"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XJm-XI-aIm">
-                                        <rect key="frame" x="0.0" y="0.0" width="40" height="33"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="70" height="33"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" red="0.68627450980000004" green="0.68627450980000004" blue="0.68627450980000004" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
