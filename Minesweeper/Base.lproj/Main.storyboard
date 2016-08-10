@@ -28,57 +28,30 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="GameCollectionViewCell" id="YKv-bv-rMg" customClass="GameCollectionViewCell" customModule="Minesweeper" customModuleProvider="target">
+                                    <collectionViewCell clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="redraw" reuseIdentifier="GameCollectionViewCell" id="YKv-bv-rMg" customClass="GameCollectionViewCell" customModule="Minesweeper" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="64" width="50" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="[0]" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bka-Lb-Yd2">
+                                                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="[0]" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bka-Lb-Yd2">
                                                     <rect key="frame" x="11" y="13" width="28" height="23"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OaR-nz-0rW">
-                                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                                    <color key="backgroundColor" red="0.40784313725490196" green="0.40784313725490196" blue="0.40784313725490196" alpha="1" colorSpace="calibratedRGB"/>
-                                                </view>
-                                                <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sar-70-mga">
-                                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                </view>
-                                                <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hq4-E5-RlA">
-                                                    <rect key="frame" x="8" y="8" width="34" height="34"/>
-                                                    <color key="backgroundColor" red="0.68627450980000004" green="0.68627450980000004" blue="0.68627450980000004" alpha="1" colorSpace="calibratedRGB"/>
-                                                </view>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <color key="backgroundColor" red="0.68627450980000004" green="0.68627450980000004" blue="0.68627450980000004" alpha="1" colorSpace="calibratedRGB"/>
+                                        <gestureRecognizers/>
                                         <constraints>
-                                            <constraint firstItem="hq4-E5-RlA" firstAttribute="bottom" secondItem="YKv-bv-rMg" secondAttribute="bottomMargin" placeholder="YES" id="51i-Q2-1X7"/>
-                                            <constraint firstItem="sar-70-mga" firstAttribute="top" secondItem="YKv-bv-rMg" secondAttribute="top" id="6Ks-6Q-HeO"/>
-                                            <constraint firstItem="OaR-nz-0rW" firstAttribute="leading" secondItem="YKv-bv-rMg" secondAttribute="leading" id="8zV-w8-zia"/>
-                                            <constraint firstItem="OaR-nz-0rW" firstAttribute="top" secondItem="YKv-bv-rMg" secondAttribute="top" id="CGS-Q1-bHE"/>
-                                            <constraint firstItem="hq4-E5-RlA" firstAttribute="leading" secondItem="YKv-bv-rMg" secondAttribute="leadingMargin" placeholder="YES" id="GX4-dW-HPK"/>
-                                            <constraint firstAttribute="bottom" secondItem="sar-70-mga" secondAttribute="bottom" id="Go1-Sm-Gfb"/>
-                                            <constraint firstAttribute="bottom" secondItem="OaR-nz-0rW" secondAttribute="bottom" id="PCg-d9-mp3"/>
-                                            <constraint firstItem="sar-70-mga" firstAttribute="leading" secondItem="YKv-bv-rMg" secondAttribute="leading" id="Q7P-mC-dcR"/>
-                                            <constraint firstAttribute="trailing" secondItem="OaR-nz-0rW" secondAttribute="trailing" id="RcL-xP-TBG"/>
-                                            <constraint firstItem="hq4-E5-RlA" firstAttribute="trailing" secondItem="YKv-bv-rMg" secondAttribute="trailingMargin" placeholder="YES" id="exu-ui-KZF"/>
                                             <constraint firstItem="Bka-Lb-Yd2" firstAttribute="centerY" secondItem="YKv-bv-rMg" secondAttribute="centerY" id="f5o-7f-xEu"/>
-                                            <constraint firstAttribute="trailing" secondItem="sar-70-mga" secondAttribute="trailing" id="hz3-Oa-P0K"/>
                                             <constraint firstItem="Bka-Lb-Yd2" firstAttribute="centerX" secondItem="YKv-bv-rMg" secondAttribute="centerX" id="vez-Ov-Bwx"/>
-                                            <constraint firstItem="hq4-E5-RlA" firstAttribute="top" secondItem="YKv-bv-rMg" secondAttribute="topMargin" placeholder="YES" id="ztp-25-rjr"/>
                                         </constraints>
                                         <connections>
                                             <outlet property="numberLabel" destination="Bka-Lb-Yd2" id="ebd-gZ-f6L"/>
-                                            <outlet property="topBevel" destination="hq4-E5-RlA" id="k8u-1W-iSo"/>
-                                            <outlet property="upperBevel" destination="sar-70-mga" id="CJL-1h-eYj"/>
-                                            <outletCollection property="bevels" destination="OaR-nz-0rW" collectionClass="NSMutableArray" id="ehY-wz-0bj"/>
-                                            <outletCollection property="bevels" destination="sar-70-mga" collectionClass="NSMutableArray" id="iI7-Ro-5DP"/>
-                                            <outletCollection property="bevels" destination="hq4-E5-RlA" collectionClass="NSMutableArray" id="wPK-fX-j9n"/>
+                                            <outletCollection property="gestureRecognizers" destination="JBA-qN-seV" appends="YES" id="Ami-oQ-MTb"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -143,6 +116,11 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
                 <customObject id="m7t-0Y-MoQ" customClass="GameCollectionViewDataSource" customModule="Minesweeper" customModuleProvider="target"/>
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="JBA-qN-seV">
+                    <connections>
+                        <action selector="cellLongPressed:" destination="BYZ-38-t0r" id="J4a-lg-OMG"/>
+                    </connections>
+                </pongPressGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="331" y="1019"/>
         </scene>

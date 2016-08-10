@@ -109,6 +109,10 @@ class GameViewController: UIViewController {
             controller.addAction(.cancel)
         }
     }
+    
+    @IBAction func cellLongPressed(sender: UILongPressGestureRecognizer) {
+        
+    }
 }
 
 // MARK: - Collection view delegate flow layout

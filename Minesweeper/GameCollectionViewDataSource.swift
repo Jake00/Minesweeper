@@ -47,10 +47,3 @@ extension GameCollectionViewDataSource: UICollectionViewDataSource {
         return cell
     }
 }
-
-extension UIColor {
-    
-    class func midGrayColor() -> UIColor {
-        return UIColor(white: 0.69, alpha: 1)
-    }
-}

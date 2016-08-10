@@ -13,12 +13,15 @@ class GameCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var numberLabel: UILabel!
     @IBOutlet weak var topBevel:    UIView!
     @IBOutlet weak var upperBevel:  UIView!
-    @IBOutlet var bevels: [UIView]!
+    
+    var drawsBevel: Bool = true {
+        didSet { setNeedsDisplay() }
+    }
     
     var isRevealed: Bool = false {
         didSet {
             numberLabel.hidden = !isRevealed
-            bevels.forEach { $0.hidden = isRevealed }
+            drawsBevel         = !isRevealed
         }
     }
     
@@ -26,25 +29,25 @@ class GameCollectionViewCell: UICollectionViewCell {
         get { return super.highlighted }
         set {
             super.highlighted = newValue
-            bevels.forEach { $0.hidden = newValue }
+            drawsBevel = !newValue
         }
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
+    override func drawRect(rect: CGRect) {
+        guard drawsBevel else { return }
+        let context = UIGraphicsGetCurrentContext()
+        CGContextSetFillColorWithColor(context, UIColor.bevelGrayColor().CGColor)
+        CGContextFillRect(context, bounds)
+        CGContextSetFillColorWithColor(context, UIColor.whiteColor().CGColor)
+        CGContextAddPath(context, trianglePath.CGPath)
+        CGContextFillPath(context)
+        CGContextSetFillColorWithColor(context, UIColor.midGrayColor().CGColor)
         let bevel = bounds.height / bounds.width * 2
-        topBevel.translatesAutoresizingMaskIntoConstraints = true
-        topBevel.frame = CGRect(
+        CGContextFillRect(context, CGRect(
             x: bevel,
             y: bevel,
             width:  contentView.bounds.width  - bevel * 2.3,
-            height: contentView.bounds.height - bevel * 2.3)
-        
-        let mask = upperBevel.layer.mask as? CAShapeLayer ?? {
-            let m = CAShapeLayer(); upperBevel.layer.mask = m; return m
-            }()
-        mask.path = trianglePath.CGPath
+            height: contentView.bounds.height - bevel * 2.3))
     }
     
     var trianglePath: UIBezierPath {
