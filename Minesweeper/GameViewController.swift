@@ -8,21 +8,11 @@
 
 import UIKit
 
-// MARK: Game view controller delegate
-
-protocol GameViewControllerDelegate: class {
-    func saveWinningCredentials(name name: String, duration: NSTimeInterval)
-}
-
-// MARK: -
-
 class GameViewController: UIViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var collectionViewLayout: UICollectionViewFlowLayout!
     @IBOutlet var dataSource: GameCollectionViewDataSource!
-    
-    weak var delegate: GameViewControllerDelegate?
     
     struct Text {
         static let changeDifficultyTitle  = NSLocalizedString("change_difficulty_action_sheet.title",         value: "Change difficulty", comment: "Title of an action sheet displayed for changing the difficulty setting of the game.")
@@ -38,6 +28,7 @@ class GameViewController: UIViewController {
     // MARK: - Game controller
     
     let game = GameController()
+    var leaderboard: Leaderboard = .shared
     
     var difficulty: GameController.Board {
         get { return game.board }
@@ -179,7 +170,7 @@ extension GameViewController: GameControllerDelegate {
         presentAlertController(title: Text.winTitle, message: Text.winMessage) { controller in
             controller.addAction(UIAlertAction(title: Text.winSave) {
                 guard let name = controller.textFields?.first?.text else { return }
-                self.delegate?.saveWinningCredentials(name: name, duration: duration)
+                self.leaderboard.addEntry(LeaderboardEntry(name: name, duration: duration, board: self.game.board))
             })
             controller.addAction(.cancel)
             controller.addTextFieldWithConfigurationHandler { textField in

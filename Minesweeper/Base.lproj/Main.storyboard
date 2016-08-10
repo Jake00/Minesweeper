@@ -69,19 +69,24 @@
                         </constraints>
                     </view>
                     <toolbarItems>
-                        <barButtonItem width="20" style="plain" systemItem="fixedSpace" id="Tak-nu-qoC"/>
+                        <barButtonItem title="Leaderboard" id="d3Y-8K-a3F">
+                            <connections>
+                                <action selector="changeDifficultyButtonPressed:" destination="BYZ-38-t0r" id="7Gc-jJ-YSy"/>
+                                <segue destination="MGS-o3-5ra" kind="show" id="vMz-Gm-sHi"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="SP2-KP-icd"/>
                         <barButtonItem title="Difficulty" id="bSS-B3-Ngx">
                             <connections>
                                 <action selector="changeDifficultyButtonPressed:" destination="BYZ-38-t0r" id="Toq-Z6-Wqu"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem style="plain" systemItem="flexibleSpace" id="SP2-KP-icd"/>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="oQt-w0-N5N"/>
                         <barButtonItem title="New Game" id="DaM-Kd-469">
                             <connections>
                                 <action selector="newGameButtonPressed:" destination="BYZ-38-t0r" id="7a5-OG-Rb4"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem width="20" style="plain" systemItem="fixedSpace" id="QgN-Dy-Ka7"/>
                     </toolbarItems>
                     <navigationItem key="navigationItem" title="Minesweeper" id="tEw-eJ-gYu">
                         <barButtonItem key="rightBarButtonItem" width="40" id="8vM-EY-PNL">
@@ -117,6 +122,51 @@
                 <customObject id="m7t-0Y-MoQ" customClass="GameCollectionViewDataSource" customModule="Minesweeper" customModuleProvider="target"/>
             </objects>
             <point key="canvasLocation" x="331" y="1019"/>
+        </scene>
+        <!--Leaderboard-->
+        <scene sceneID="vJ9-BE-85J">
+            <objects>
+                <tableViewController id="MGS-o3-5ra" customClass="LeaderboardViewController" customModule="Minesweeper" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="Sxd-N5-3Kh">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="LeaderboardCell" textLabel="GMa-dP-xNX" detailTextLabel="cdI-O2-BPC" style="IBUITableViewCellStyleSubtitle" id="GUy-uN-AQ3">
+                                <rect key="frame" x="0.0" y="114" width="600" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="GUy-uN-AQ3" id="Lsu-9s-Lmf">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="GMa-dP-xNX">
+                                            <rect key="frame" x="15" y="5" width="32" height="20"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="cdI-O2-BPC">
+                                            <rect key="frame" x="15" y="25" width="31" height="14"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="MGS-o3-5ra" id="1jo-9P-52U"/>
+                            <outlet property="delegate" destination="MGS-o3-5ra" id="oZm-Ei-Pes"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Leaderboard" id="Oaw-ma-Jd2"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Fsz-2h-Cg0" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1050" y="1019"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="DcK-B0-W53">

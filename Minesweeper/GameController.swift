@@ -37,7 +37,7 @@ final class GameController: CellProvider {
     
     // MARK: Board
     
-    struct Board {
+    struct Board: Equatable {
         let rows:    Int
         let columns: Int
         let bombs:   Int
@@ -46,6 +46,22 @@ final class GameController: CellProvider {
         static let easy   = Board(rows: 8,  columns: 8,  bombs: 5)
         static let medium = Board(rows: 8,  columns: 8,  bombs: 10)
         static let hard   = Board(rows: 12, columns: 12, bombs: 40)
+        
+        init(rows: Int, columns: Int, bombs: Int) {
+            self.rows = rows; self.columns = columns; self.bombs = bombs
+        }
+        
+        init?(dictionary: [String: AnyObject]) {
+            guard let rows = dictionary["rows"]    as? Int,
+                columns    = dictionary["columns"] as? Int,
+                bombs      = dictionary["bombs"] as? Int
+                else { return nil }
+            self.init(rows: rows, columns: columns, bombs: bombs)
+        }
+        
+        var asDictionary: [String: AnyObject] {
+            return ["rows": rows, "columns": columns, "bombs": bombs]
+        }
     }
     
     var remainingCoveredCells: Int {
@@ -152,4 +168,10 @@ final class GameController: CellProvider {
         
         return indices
     }
+}
+
+func == (lhs: GameController.Board, rhs: GameController.Board) -> Bool {
+    return lhs.rows    == rhs.rows
+        && lhs.columns == rhs.columns
+        && lhs.bombs   == rhs.bombs
 }
