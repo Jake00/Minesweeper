@@ -68,8 +68,8 @@ class GameViewController: UIViewController {
     private var timeCounter: NSTimer?
     var startTime: NSDate?
     
-    dynamic func updateTime(force force: Bool = false) {
-        guard force || game.state == .Playing else { return }
+    dynamic func updateTime() {
+        guard game.state == .Playing else { return }
         let duration = startTime.map { -$0.timeIntervalSinceNow } ?? 0
         timeLabel.text = timeFormatter.stringFromTimeInterval(duration)
     }
