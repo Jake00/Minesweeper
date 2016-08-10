@@ -95,6 +95,16 @@ class GameViewController: UIViewController {
         timeCounter = nil
     }
     
+    private var previousLayoutSize: CGSize = .zero
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        if view.bounds.size != previousLayoutSize {
+            previousLayoutSize = view.bounds.size
+            collectionView.reloadData()
+        }
+    }
+    
     // MARK: - Interface actions
     
     @IBAction func newGameButtonPressed(sender: UIBarButtonItem) {
