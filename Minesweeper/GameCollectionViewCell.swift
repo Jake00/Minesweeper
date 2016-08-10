@@ -8,21 +8,29 @@
 
 import UIKit
 
+@objc protocol GameCollectionViewCellTouchEvents {
+    func gameCollectionCellLongPressed(cell: GameCollectionViewCell)
+}
+
 class GameCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var numberLabel: UILabel!
-    @IBOutlet weak var topBevel:    UIView!
-    @IBOutlet weak var upperBevel:  UIView!
     
-    var drawsBevel: Bool = true {
-        didSet { setNeedsDisplay() }
+    var isMarked = false
+    
+    func reveal() {
+        numberLabel.hidden = false
+        drawsBevel = isMarked
     }
     
-    var isRevealed: Bool = false {
-        didSet {
-            numberLabel.hidden = !isRevealed
-            drawsBevel         = !isRevealed
-        }
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(longPressed(_:))))
+    }
+    
+    dynamic func longPressed(sender: UILongPressGestureRecognizer) {
+        let sel = #selector(GameCollectionViewCellTouchEvents.gameCollectionCellLongPressed(_:))
+        UIApplication.sharedApplication().sendAction(sel, to: nil, from: self, forEvent: nil)
     }
     
     override var highlighted: Bool {
@@ -31,6 +39,10 @@ class GameCollectionViewCell: UICollectionViewCell {
             super.highlighted = newValue
             drawsBevel = !newValue
         }
+    }
+    
+    var drawsBevel = true {
+        didSet { setNeedsDisplay() }
     }
     
     override func drawRect(rect: CGRect) {

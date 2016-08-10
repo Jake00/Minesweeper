@@ -14,6 +14,7 @@ struct GameCell {
         case Covered
         case Revealed
         case Bomb
+        case Marked
     }
     
     var state: State = .Covered
@@ -21,18 +22,11 @@ struct GameCell {
     var adjacentBombs: Int = 0
     
     var canReveal: Bool {
-        return state != .Revealed
+        return state == .Covered || state == .Bomb
     }
     
-    var isCovered: Bool {
-        return state == .Covered
-    }
-    
-    var isBomb: Bool {
-        return state == .Bomb
-    }
-    
-    var isRevealed: Bool {
-        return state == .Revealed
-    }
+    var isCovered:  Bool { return state == .Covered  }
+    var isBomb:     Bool { return state == .Bomb     }
+    var isRevealed: Bool { return state == .Revealed }
+    var isMarked:   Bool { return state == .Marked   }
 }

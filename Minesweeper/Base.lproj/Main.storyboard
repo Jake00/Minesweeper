@@ -51,7 +51,6 @@
                                         </constraints>
                                         <connections>
                                             <outlet property="numberLabel" destination="Bka-Lb-Yd2" id="ebd-gZ-f6L"/>
-                                            <outletCollection property="gestureRecognizers" destination="JBA-qN-seV" appends="YES" id="Ami-oQ-MTb"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -116,11 +115,6 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
                 <customObject id="m7t-0Y-MoQ" customClass="GameCollectionViewDataSource" customModule="Minesweeper" customModuleProvider="target"/>
-                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="JBA-qN-seV">
-                    <connections>
-                        <action selector="cellLongPressed:" destination="BYZ-38-t0r" id="J4a-lg-OMG"/>
-                    </connections>
-                </pongPressGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="331" y="1019"/>
         </scene>

@@ -40,10 +40,16 @@ extension GameCollectionViewDataSource: UICollectionViewDataSource {
         let cellModel = controller.cells[indexPath.item]
         
         cell.numberLabel.text = cellModel.isBomb ? bombSymbol
+            : cellModel.isMarked ? flagSymbol
             : cellModel.adjacentBombs == 0 ? nil
             : formatter.stringFromNumber(cellModel.adjacentBombs)
-        cell.isRevealed         = cellModel.isRevealed || (cellModel.isBomb && revealBombs)
+        
+        let isCovered = !cellModel.isRevealed && !(cellModel.isBomb && revealBombs)
+        cell.isMarked = cellModel.isMarked
+        cell.drawsBevel         = isCovered ||  cellModel.isMarked
+        cell.numberLabel.hidden = isCovered && !cellModel.isMarked
         cell.backgroundColor    = indexPath.row == losingIndex ? .redColor() : .midGrayColor()
+        
         return cell
     }
 }

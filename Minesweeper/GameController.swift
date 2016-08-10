@@ -54,11 +54,11 @@ final class GameController: CellProvider {
     
     // MARK: Index conversion
     
-    func index(forRow row: Int, column: Int) -> Int {
+    func index(for row: Int, column: Int) -> Int {
         return row * board.columns + column
     }
     
-    func coordinate(forIndex index: Int) -> (row: Int, column: Int) {
+    func coordinate(for index: Int) -> (row: Int, column: Int) {
         return (index / board.rows, index % board.columns)
     }
     
@@ -75,7 +75,7 @@ final class GameController: CellProvider {
         insertBombs()
     }
     
-    func reveal(atIndex index: Int) -> [Int] {
+    func reveal(at index: Int) -> [Int] {
         var cell = cells[index]
         
         guard cell.isCovered else {
@@ -100,10 +100,14 @@ final class GameController: CellProvider {
         /* Auto reveal cells when they have no adjacent bombs */
         guard cell.adjacentBombs == 0 else { return [index] }
         var indices = adjacentCellIndices(forIndex: index).flatMap {
-            self.reveal(atIndex: $0)
+            self.reveal(at: $0)
         }
         indices.append(index)
         return Set(indices).sort()
+    }
+    
+    func mark(at index: Int) {
+        cells[index].state = cells[index].isMarked ? .Covered : .Marked
     }
     
     // MARK: Private
@@ -124,7 +128,7 @@ final class GameController: CellProvider {
     }
     
     private func adjacentCellIndices(forIndex index: Int) -> [Int] {
-        let (row, column) = coordinate(forIndex: index)
+        let (row, column) = coordinate(for: index)
         let isTopEdge    = row    == 0
         let isBottomEdge = row    == board.rows - 1
         let isLeftEdge   = column == 0

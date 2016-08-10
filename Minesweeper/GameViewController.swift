@@ -109,9 +109,15 @@ class GameViewController: UIViewController {
             controller.addAction(.cancel)
         }
     }
+}
+
+extension GameViewController: GameCollectionViewCellTouchEvents {
     
-    @IBAction func cellLongPressed(sender: UILongPressGestureRecognizer) {
-        
+    func gameCollectionCellLongPressed(cell: GameCollectionViewCell) {
+        if let indexPath = collectionView.indexPathForCell(cell) {
+            game.mark(at: indexPath.item)
+            collectionView.reloadItemsAtIndexPaths([indexPath])
+        }
     }
 }
 
@@ -142,14 +148,15 @@ extension GameViewController: UICollectionViewDelegateFlowLayout {
             startTime = NSDate()
         }
         
-        game.reveal(atIndex: indexPath.row)
+        game.reveal(at: indexPath.item)
             .map     { NSIndexPath(forItem: $0, inSection: 0) }
             .flatMap { collectionView.cellForItemAtIndexPath($0) as? GameCollectionViewCell }
-            .forEach { $0.isRevealed = true }
+            .forEach { $0.reveal() }
     }
     
     func collectionView(collectionView: UICollectionView, shouldHighlightItemAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return game.state == .Playing && game.cells[indexPath.row].canReveal
+        let cell = game.cells[indexPath.item]
+        return game.state == .Playing && cell.canReveal && !cell.isMarked
     }
 }
 
