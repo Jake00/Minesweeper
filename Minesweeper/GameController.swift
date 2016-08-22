@@ -27,43 +27,6 @@ final class GameController: CellProvider {
     
     weak var delegate: GameControllerDelegate?
     
-    enum State {
-        case Won, Lost, Playing
-    }
-    
-    init() {
-        reset()
-    }
-    
-    // MARK: Board
-    
-    struct Board: Equatable {
-        let rows:    Int
-        let columns: Int
-        let bombs:   Int
-        var squares: Int { return rows * columns }
-        
-        static let easy   = Board(rows: 8,  columns: 8,  bombs: 5)
-        static let medium = Board(rows: 8,  columns: 8,  bombs: 10)
-        static let hard   = Board(rows: 12, columns: 12, bombs: 40)
-        
-        init(rows: Int, columns: Int, bombs: Int) {
-            self.rows = rows; self.columns = columns; self.bombs = bombs
-        }
-        
-        init?(dictionary: [String: AnyObject]) {
-            guard let rows = dictionary["rows"]    as? Int,
-                columns    = dictionary["columns"] as? Int,
-                bombs      = dictionary["bombs"] as? Int
-                else { return nil }
-            self.init(rows: rows, columns: columns, bombs: bombs)
-        }
-        
-        var asDictionary: [String: AnyObject] {
-            return ["rows": rows, "columns": columns, "bombs": bombs]
-        }
-    }
-    
     var remainingCoveredCells: Int {
         return cells.reduce(0) { $1.isCovered ? $0 + 1 : $0 }
     }
@@ -72,29 +35,39 @@ final class GameController: CellProvider {
         return cells.reduce(board.bombs) { $1.isMarked ? $0 - 1 : $0 }
     }
     
-    // MARK: Index conversion
-    
-    func index(for row: Int, column: Int) -> Int {
-        return row * board.columns + column
+    enum State {
+        case Won, Lost, Playing
     }
     
-    func coordinate(for index: Int) -> (row: Int, column: Int) {
-        return (index / board.rows, index % board.columns)
+    init() {
+        reset()
     }
     
     // MARK: Mutating
     
-    func resetBoard(difficulty board: Board) {
-        self.board = board
-        reset()
-    }
-    
-    func reset() {
+    /**
+     Resets the game board.
+     
+     - parameter board: The new board to use. If nil the board is not updated.
+     */
+    func reset(board board: Board? = nil) {
+        if let board = board {
+            self.board = board
+        }
         state = .Playing
-        cells = Array(count: board.squares, repeatedValue: GameCell())
+        cells = Array(count: self.board.squares, repeatedValue: GameCell())
         insertBombs()
     }
     
+    /**
+     Reveals a cell at a given position, and then adjacent cells only if there are no adjacent bombs.
+     
+     The game will lose if this cell is a bomb, or win if it reveals the last covered cell (ie. no moves remaining).
+     
+     - parameter index: The index of the cell to reveal.
+     
+     - returns: An array of indices of the cells that were revealed by this move.
+     */
     func reveal(at index: Int) -> [Int] {
         var cell = cells[index]
         
@@ -119,13 +92,16 @@ final class GameController: CellProvider {
         
         /* Auto reveal cells when they have no adjacent bombs */
         guard cell.adjacentBombs == 0 else { return [index] }
-        var indices = adjacentCellIndices(forIndex: index).flatMap {
+        var indices = board.adjacentIndices(for: index).flatMap {
             self.reveal(at: $0)
         }
         indices.append(index)
         return Set(indices).sort()
     }
     
+    /**
+     Toggles a cell as marked for having a bomb. If it is already marked, it removes the marking.
+     */
     func mark(at index: Int) {
         cells[index].state = cells[index].isMarked ? .Covered : .Marked
     }
@@ -141,41 +117,9 @@ final class GameController: CellProvider {
             let index = nextFreeIndex()
             cells[index].state = .Bomb
             
-            for adjacentIndex in adjacentCellIndices(forIndex: index) {
+            for adjacentIndex in board.adjacentIndices(for: index) {
                 cells[adjacentIndex].adjacentBombs += 1
             }
         }
     }
-    
-    private func adjacentCellIndices(forIndex index: Int) -> [Int] {
-        let (row, column) = coordinate(for: index)
-        let isTopEdge    = row    == 0
-        let isBottomEdge = row    == board.rows - 1
-        let isLeftEdge   = column == 0
-        let isRightEdge  = column == board.columns - 1
-        let up           = index  -  board.columns
-        let down         = index  +  board.columns
-        let left         = index  -  1
-        let right        = index  +  1
-        
-        var indices: [Int] = []
-        indices.reserveCapacity(8)
-        
-        if !isTopEdge    && !isLeftEdge  { indices.append(up - 1)   }
-        if !isTopEdge                    { indices.append(up)       }
-        if !isTopEdge    && !isRightEdge { indices.append(up + 1)   }
-        if !isLeftEdge                   { indices.append(left)     }
-        if !isRightEdge                  { indices.append(right)    }
-        if !isBottomEdge && !isLeftEdge  { indices.append(down - 1) }
-        if !isBottomEdge                 { indices.append(down)     }
-        if !isBottomEdge && !isRightEdge { indices.append(down + 1) }
-        
-        return indices
-    }
-}
-
-func == (lhs: GameController.Board, rhs: GameController.Board) -> Bool {
-    return lhs.rows    == rhs.rows
-        && lhs.columns == rhs.columns
-        && lhs.bombs   == rhs.bombs
 }

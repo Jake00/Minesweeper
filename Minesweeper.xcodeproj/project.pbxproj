@@ -7,9 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		235F9C481D5B2C7E0065E084 /* UIViewController+Presenting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 235F9C471D5B2C7E0065E084 /* UIViewController+Presenting.swift */; };
+		235F9C481D5B2C7E0065E084 /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 235F9C471D5B2C7E0065E084 /* Alerts.swift */; };
 		235F9C4A1D5B5EDE0065E084 /* Leaderboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 235F9C491D5B5EDE0065E084 /* Leaderboard.swift */; };
 		235F9C4C1D5B65170065E084 /* LeaderboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 235F9C4B1D5B65170065E084 /* LeaderboardViewController.swift */; };
+		235F9C4E1D6ADF380065E084 /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = 235F9C4D1D6ADF380065E084 /* Board.swift */; };
+		235F9C501D6ADF880065E084 /* Colours.swift in Sources */ = {isa = PBXBuildFile; fileRef = 235F9C4F1D6ADF880065E084 /* Colours.swift */; };
 		23F176E91D587C7D005EEA84 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23F176E81D587C7D005EEA84 /* AppDelegate.swift */; };
 		23F176EB1D587C7D005EEA84 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23F176EA1D587C7D005EEA84 /* GameViewController.swift */; };
 		23F176EE1D587C7D005EEA84 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 23F176EC1D587C7D005EEA84 /* Main.storyboard */; };
@@ -22,9 +24,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		235F9C471D5B2C7E0065E084 /* UIViewController+Presenting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Presenting.swift"; sourceTree = "<group>"; };
+		235F9C471D5B2C7E0065E084 /* Alerts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
 		235F9C491D5B5EDE0065E084 /* Leaderboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Leaderboard.swift; sourceTree = "<group>"; };
 		235F9C4B1D5B65170065E084 /* LeaderboardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeaderboardViewController.swift; sourceTree = "<group>"; };
+		235F9C4D1D6ADF380065E084 /* Board.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
+		235F9C4F1D6ADF880065E084 /* Colours.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colours.swift; sourceTree = "<group>"; };
 		23F176E51D587C7D005EEA84 /* Minesweeper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Minesweeper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		23F176E81D587C7D005EEA84 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		23F176EA1D587C7D005EEA84 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
@@ -71,10 +75,12 @@
 				23F176E81D587C7D005EEA84 /* AppDelegate.swift */,
 				235F9C491D5B5EDE0065E084 /* Leaderboard.swift */,
 				23F176FA1D58A80E005EEA84 /* GameController.swift */,
+				235F9C4D1D6ADF380065E084 /* Board.swift */,
 				23F176FC1D58A834005EEA84 /* GameCell.swift */,
 				23F176EA1D587C7D005EEA84 /* GameViewController.swift */,
 				235F9C4B1D5B65170065E084 /* LeaderboardViewController.swift */,
-				235F9C471D5B2C7E0065E084 /* UIViewController+Presenting.swift */,
+				235F9C471D5B2C7E0065E084 /* Alerts.swift */,
+				235F9C4F1D6ADF880065E084 /* Colours.swift */,
 				23F177001D59AA9A005EEA84 /* GameCollectionViewDataSource.swift */,
 				23F176FE1D58B8C0005EEA84 /* GameCollectionViewCell.swift */,
 				23F176EC1D587C7D005EEA84 /* Main.storyboard */,
@@ -159,13 +165,15 @@
 			files = (
 				23F176EB1D587C7D005EEA84 /* GameViewController.swift in Sources */,
 				235F9C4A1D5B5EDE0065E084 /* Leaderboard.swift in Sources */,
+				235F9C501D6ADF880065E084 /* Colours.swift in Sources */,
+				235F9C4E1D6ADF380065E084 /* Board.swift in Sources */,
 				23F176FF1D58B8C0005EEA84 /* GameCollectionViewCell.swift in Sources */,
 				23F176FB1D58A80E005EEA84 /* GameController.swift in Sources */,
 				235F9C4C1D5B65170065E084 /* LeaderboardViewController.swift in Sources */,
 				23F176E91D587C7D005EEA84 /* AppDelegate.swift in Sources */,
 				23F176FD1D58A834005EEA84 /* GameCell.swift in Sources */,
 				23F177011D59AA9A005EEA84 /* GameCollectionViewDataSource.swift in Sources */,
-				235F9C481D5B2C7E0065E084 /* UIViewController+Presenting.swift in Sources */,
+				235F9C481D5B2C7E0065E084 /* Alerts.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

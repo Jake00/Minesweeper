@@ -19,7 +19,7 @@ class LeaderboardViewController: UITableViewController {
         return formatter
     }()
     
-    func entries(difficulty board: GameController.Board) -> [LeaderboardEntry] {
+    func entries(difficulty board: Board) -> [LeaderboardEntry] {
         return leaderboard.entries.filter { $0.board == board }.sort()
     }
     
@@ -56,7 +56,9 @@ class LeaderboardViewController: UITableViewController {
         }
         
         /* Skip over sections with empty elements */
-        let baseOffset = empties.reduce((0, true)) { !$0.1 ? $0 : $1 ? ($0.0 + 1, true) : ($0.0, false) }.0
+        let baseOffset = empties.reduce((0, false)) { (base: (index: Int, stop: Bool), nextIsEmpty: Bool) -> (Int, Bool) in
+            base.stop ? base : nextIsEmpty ? (base.index + 1, false) : (base.index, true)
+            }.0
         let offset = empties[baseOffset...(section + baseOffset)].reduce(0) { $1 ? $0 + 1 : $0 }
         return _entries(section + baseOffset + offset)
     }
@@ -71,10 +73,10 @@ class LeaderboardViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch entries(forSection: section).first?.board {
-        case nil:                          return nil
-        case GameController.Board.easy?:   return GameViewController.Text.changeDifficultyEasy
-        case GameController.Board.medium?: return GameViewController.Text.changeDifficultyMedium
-        case GameController.Board.hard?:   return GameViewController.Text.changeDifficultyHard
+        case nil:           return nil
+        case Board.easy?:   return GameViewController.Text.changeDifficultyEasy
+        case Board.medium?: return GameViewController.Text.changeDifficultyMedium
+        case Board.hard?:   return GameViewController.Text.changeDifficultyHard
         default: return NSLocalizedString("leaderboards.custom_board_size", value: "Custom", comment: "A non standard board size")
         }
     }

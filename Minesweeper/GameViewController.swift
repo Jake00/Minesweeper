@@ -30,17 +30,13 @@ class GameViewController: UIViewController {
     let game = GameController()
     var leaderboard: Leaderboard = .shared
     
-    var difficulty: GameController.Board {
+    var difficulty: Board {
         get { return game.board }
         set { reset(usingNewBoard: newValue) }
     }
     
-    func reset(usingNewBoard board: GameController.Board? = nil) {
-        if let board = board {
-            game.resetBoard(difficulty: board)
-        } else {
-            game.reset()
-        }
+    func reset(usingNewBoard board: Board? = nil) {
+        game.reset(board: board)
         dataSource.reset()
         startTime = nil
         collectionView.reloadData()
