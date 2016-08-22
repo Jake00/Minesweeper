@@ -9,7 +9,7 @@
 import UIKit
 
 protocol CellProvider {
-    var cells: [GameCell] { get }
+    var cells: [BoardCell] { get }
 }
 
 class GameCollectionViewDataSource: NSObject {

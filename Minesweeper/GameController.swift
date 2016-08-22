@@ -21,7 +21,7 @@ protocol GameControllerDelegate: class {
 
 final class GameController: CellProvider {
     
-    private(set) var cells: [GameCell] = []
+    private(set) var cells: [BoardCell] = []
     private(set) var board: Board = .easy
     private(set) var state: State = .Playing
     
@@ -55,7 +55,7 @@ final class GameController: CellProvider {
             self.board = board
         }
         state = .Playing
-        cells = Array(count: self.board.squares, repeatedValue: GameCell())
+        cells = Array(count: self.board.squares, repeatedValue: BoardCell())
         insertBombs()
     }
     
