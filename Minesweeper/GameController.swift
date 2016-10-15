@@ -69,7 +69,7 @@ final class GameController: CellProvider {
      - returns: An array of indices of the cells that were revealed by this move.
      */
     func reveal(at index: Int) -> [Int] {
-        var cell = cells[index]
+        let cell = cells[index]
         
         guard cell.isCovered else {
             /* Lose condition */
@@ -80,8 +80,11 @@ final class GameController: CellProvider {
             return [index]
         }
         
-        cell.state = .Revealed
-        cells[index] = cell
+        if !cell.isMarked {
+            var cell = cell
+            cell.state = .Revealed
+            cells[index] = cell
+        }
         
         /* Win condition */
         if remainingCoveredCells == 0 {
@@ -100,10 +103,11 @@ final class GameController: CellProvider {
     }
     
     /**
-     Toggles a cell as marked for having a bomb. If it is already marked, it removes the marking.
+     Toggles a cell as marked for having a bomb only if it is not already revealed. If it is already marked, it removes the marking.
      */
     func mark(at index: Int) {
-        cells[index].state = cells[index].isMarked ? .Covered : .Marked
+        guard !cells[index].isRevealed else { return }
+        cells[index].isMarked = !cells[index].isMarked
     }
     
     // MARK: Private

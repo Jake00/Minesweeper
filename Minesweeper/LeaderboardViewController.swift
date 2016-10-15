@@ -90,4 +90,14 @@ class LeaderboardViewController: UITableViewController {
         
         return cell
     }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setToolbarHidden(true, animated: true)
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setToolbarHidden(false, animated: true)
+    }
 }

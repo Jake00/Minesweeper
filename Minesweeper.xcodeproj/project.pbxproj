@@ -53,6 +53,35 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		235F9C511D6AF4F60065E084 /* Leaderboard */ = {
+			isa = PBXGroup;
+			children = (
+				235F9C491D5B5EDE0065E084 /* Leaderboard.swift */,
+				235F9C4B1D5B65170065E084 /* LeaderboardViewController.swift */,
+			);
+			name = Leaderboard;
+			sourceTree = "<group>";
+		};
+		235F9C521D6AF5190065E084 /* Game views */ = {
+			isa = PBXGroup;
+			children = (
+				23F176EA1D587C7D005EEA84 /* GameViewController.swift */,
+				23F177001D59AA9A005EEA84 /* GameCollectionViewDataSource.swift */,
+				23F176FE1D58B8C0005EEA84 /* GameCollectionViewCell.swift */,
+			);
+			name = "Game views";
+			sourceTree = "<group>";
+		};
+		235F9C531D6AF5250065E084 /* Board */ = {
+			isa = PBXGroup;
+			children = (
+				23F176FA1D58A80E005EEA84 /* GameController.swift */,
+				235F9C4D1D6ADF380065E084 /* Board.swift */,
+				23F176FC1D58A834005EEA84 /* BoardCell.swift */,
+			);
+			name = Board;
+			sourceTree = "<group>";
+		};
 		23F176DC1D587C7D005EEA84 = {
 			isa = PBXGroup;
 			children = (
@@ -73,16 +102,11 @@
 			isa = PBXGroup;
 			children = (
 				23F176E81D587C7D005EEA84 /* AppDelegate.swift */,
-				235F9C491D5B5EDE0065E084 /* Leaderboard.swift */,
-				23F176FA1D58A80E005EEA84 /* GameController.swift */,
-				235F9C4D1D6ADF380065E084 /* Board.swift */,
-				23F176FC1D58A834005EEA84 /* BoardCell.swift */,
-				23F176EA1D587C7D005EEA84 /* GameViewController.swift */,
-				235F9C4B1D5B65170065E084 /* LeaderboardViewController.swift */,
+				235F9C511D6AF4F60065E084 /* Leaderboard */,
+				235F9C531D6AF5250065E084 /* Board */,
+				235F9C521D6AF5190065E084 /* Game views */,
 				235F9C471D5B2C7E0065E084 /* Alerts.swift */,
 				235F9C4F1D6ADF880065E084 /* Colours.swift */,
-				23F177001D59AA9A005EEA84 /* GameCollectionViewDataSource.swift */,
-				23F176FE1D58B8C0005EEA84 /* GameCollectionViewCell.swift */,
 				23F176EC1D587C7D005EEA84 /* Main.storyboard */,
 				23F176EF1D587C7D005EEA84 /* Assets.xcassets */,
 				23F176F11D587C7D005EEA84 /* LaunchScreen.storyboard */,

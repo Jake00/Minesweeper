@@ -48,6 +48,7 @@ struct LeaderboardEntry {
             boardDict  = dictionary["board"]    as? [String: AnyObject],
             board      = Board(dictionary: boardDict)
             else { return nil }
+        
         self.init(name: name, duration: duration, board: board)
     }
     

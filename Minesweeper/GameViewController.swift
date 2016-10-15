@@ -109,11 +109,11 @@ class GameViewController: UIViewController {
     }
     
     @IBAction func changeDifficultyButtonPressed(sender: UIBarButtonItem) {
-        presentAlertController(title: Text.changeDifficultyTitle, style: .ActionSheet) { controller in
-            controller.addAction(UIAlertAction(title: Text.changeDifficultyEasy)   { self.difficulty = .easy   })
-            controller.addAction(UIAlertAction(title: Text.changeDifficultyMedium) { self.difficulty = .medium })
-            controller.addAction(UIAlertAction(title: Text.changeDifficultyHard)   { self.difficulty = .hard   })
-            controller.addAction(.cancel)
+        presentAlertController(title: Text.changeDifficultyTitle, style: .ActionSheet) { alert in
+            alert.addAction(UIAlertAction(title: Text.changeDifficultyEasy)   { self.difficulty = .easy   })
+            alert.addAction(UIAlertAction(title: Text.changeDifficultyMedium) { self.difficulty = .medium })
+            alert.addAction(UIAlertAction(title: Text.changeDifficultyHard)   { self.difficulty = .hard   })
+            alert.addAction(.cancel)
         }
     }
 }
@@ -140,15 +140,10 @@ extension GameViewController: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        let scale = UIScreen.mainScreen().scale
         return CGSize(
-            width:  floor(collectionViewContentSize.width  / CGFloat(game.board.columns)),
-            height: floor(collectionViewContentSize.height / CGFloat(game.board.rows)))
-    }
-    
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
-        let cellWidth = self.collectionView(collectionView, layout: collectionViewLayout, sizeForItemAtIndexPath: NSIndexPath(forItem: 0, inSection: 0)).width
-        let underlap = collectionViewContentSize.width - CGFloat(Int(cellWidth) * game.board.columns)
-        return UIEdgeInsets(top: 0, left: underlap / 2, bottom: 0, right: underlap / 2)
+            width:  floor(collectionViewContentSize.width  / CGFloat(game.board.columns) * scale) / scale,
+            height: floor(collectionViewContentSize.height / CGFloat(game.board.rows)    * scale) / scale)
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
@@ -174,13 +169,13 @@ extension GameViewController: GameControllerDelegate {
     
     func gameDidWin(controller: GameController) {
         let duration = startTime.map { -$0.timeIntervalSinceNow } ?? 0
-        presentAlertController(title: Text.winTitle, message: Text.winMessage) { controller in
-            controller.addAction(UIAlertAction(title: Text.winSave) {
-                guard let name = controller.textFields?.first?.text else { return }
+        presentAlertController(title: Text.winTitle, message: Text.winMessage) { alert in
+            alert.addAction(UIAlertAction(title: Text.winSave) {
+                guard let name = alert.textFields?.first?.text else { return }
                 self.leaderboard.addEntry(LeaderboardEntry(name: name, duration: duration, board: self.game.board))
             })
-            controller.addAction(.cancel)
-            controller.addTextFieldWithConfigurationHandler { textField in
+            alert.addAction(.cancel)
+            alert.addTextFieldWithConfigurationHandler { textField in
                 textField.placeholder = Text.winNamePlaceholder
             }
         }

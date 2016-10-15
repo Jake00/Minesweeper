@@ -40,8 +40,8 @@ extension GameCollectionViewDataSource: UICollectionViewDataSource {
         let cellModel = controller.cells[indexPath.item]
         
         cell.numberLabel.textColor = cellModel.adjacentBombs.color
-        cell.numberLabel.text = cellModel.isBomb ? bombSymbol
-            : cellModel.isMarked ? flagSymbol
+        cell.numberLabel.text = cellModel.isMarked ? flagSymbol
+            : cellModel.isBomb ? bombSymbol
             : cellModel.adjacentBombs == 0 ? nil
             : formatter.stringFromNumber(cellModel.adjacentBombs)
         
